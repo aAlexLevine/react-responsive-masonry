@@ -10,19 +10,19 @@ const getWindowWidth = () => {
 }
 
 const useWindowWidth = () => {
-  const [width, setWidth] = useState(getWindowWidth())
+  const [width, setWidth] = useState(null)
   const hasWindow = typeof window !== "undefined"
 
-  const handleResize = useCallback(() => {
-    setWidth(getWindowWidth())
-  }, [])
-
   useEffect(() => {
+    const handleResize = () => {
+      setWidth(getWindowWidth())
+    });
     if (hasWindow) {
+  
       window.addEventListener("resize", handleResize)
       return () => window.removeEventListener("resize", handleResize)
     }
-  }, [hasWindow, handleResize])
+  }, [hasWindow])
 
   return width
 }
